@@ -1,0 +1,151 @@
+Microsoft Windows [Version 10.0.26100.4946]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\database\pgAdmin 4\runtime>"C:\database\pgAdmin 4\runtime\psql.exe" "host=localhost port=5432 dbname=po
+stgres user=postgres sslmode=prefer connect_timeout=10" 2>>&1
+psql (17.6)
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# CREATE TABLE students (
+postgres(#     id SERIAL PRIMARY KEY,
+postgres(#     name VARCHAR(100),
+postgres(#     age INT
+postgres(# );
+ERROR:  character with byte sequence 0xd0 0x9e in encoding "UTF8" has no equivalent in encoding "WIN1252"
+postgres=#
+postgres=# -- insert data
+postgres=# INSERT INTO students (name, age) VALUES ('Alice', 21), ('Bob', 23);
+INSERT 0 2
+postgres=# \dt
+          List of relations
+ Schema |   Name   | Type  |  Owner
+--------+----------+-------+----------
+ public | students | table | postgres
+(1 row)
+
+
+postgres=# SELECT * FROM students;
+ id | name  | age
+----+-------+-----
+  1 | Alice |  21
+  2 | Bob   |  23
+  3 | Alice |  21
+  4 | Bob   |  23
+(4 rows)
+
+
+postgres=# DROP TABLE students;
+DROP TABLE
+postgres=# \dt
+Did not find any relations.
+postgres=# CREATE TABLE students (
+postgres(#     id SERIAL PRIMARY KEY,
+postgres(#     name VARCHAR(100),
+postgres(#     age INT
+postgres(# );
+CREATE TABLE
+postgres=#
+postgres=# -- insert data
+postgres=# INSERT INTO students (name, age) VALUES ('Alice', 21), ('Bob', 23);
+INSERT 0 2
+postgres=# \dt
+          List of relations
+ Schema |   Name   | Type  |  Owner
+--------+----------+-------+----------
+ public | students | table | postgres
+(1 row)
+
+
+postgres=# SELECT * FROM students;
+ id | name  | age
+----+-------+-----
+  1 | Alice |  21
+  2 | Bob   |  23
+(2 rows)
+
+
+postgres=# DROP TABLE students;
+DROP TABLE
+postgres=# CREATE TABLE students (
+postgres(#     student_id SERIAL PRIMARY KEY,
+postgres(#     name VARCHAR(100),
+postgres(#     age INT
+postgres(#     email VARCHAR(100)
+postgres(#     faculty VARCHAR(100)
+postgres(# );
+ERROR:  character with byte sequence 0xd0 0x9e in encoding "UTF8" has no equivalent in encoding "WIN1252"
+postgres=#
+postgres=# -- insert data
+postgres=# INSERT INTO students (name, age, email, faculty) VALUES ('Alice', 21, 'alice@auca.kg', 'SFW'),
+('Bob', 23, 'bob@auca.kg', 'IBL');
+ERROR:  character with byte sequence 0xd0 0x9e in encoding "UTF8" has no equivalent in encoding "WIN1252"
+postgres=# CREATE TABLE students (
+postgres(#     student_id SERIAL PRIMARY KEY,
+postgres(#     name VARCHAR(100),
+postgres(#     age INT,
+postgres(#     email VARCHAR(100),
+postgres(#     faculty VARCHAR(100)
+postgres(# );
+CREATE TABLE
+postgres=#
+postgres=# -- insert data
+postgres=# INSERT INTO students (name, age, email, faculty) VALUES ('Alice', 21, 'alice@auca.kg', 'SFW'),
+('Bob', 23, 'bob@auca.kg', 'IBL');
+INSERT 0 2
+postgres=# SELECT * FROM students;
+ student_id | name  | age |     email     | faculty
+------------+-------+-----+---------------+---------
+          1 | Alice |  21 | alice@auca.kg | SFW
+          2 | Bob   |  23 | bob@auca.kg   | IBL
+(2 rows)
+
+
+postgres=# SELECT student_id, faculty FROM students;
+ student_id | faculty
+------------+---------
+          1 | SFW
+          2 | IBL
+(2 rows)
+
+
+postgres=# SELECT name, email FROM students WHERE name = 'Alice';
+ name  |     email
+-------+---------------
+ Alice | alice@auca.kg
+(1 row)
+
+
+postgres=# SELECT name, email FROM students ORDER BY;
+ERROR:  character with byte sequence 0xd0 0x9e in encoding "UTF8" has no equivalent in encoding "WIN1252"
+postgres=# SELECT name, email FROM students ORDER BY age;
+ name  |     email
+-------+---------------
+ Alice | alice@auca.kg
+ Bob   | bob@auca.kg
+(2 rows)
+
+
+postgres=# SELECT name, age, email FROM students ORDER BY age;
+ name  | age |     email
+-------+-----+---------------
+ Alice |  21 | alice@auca.kg
+ Bob   |  23 | bob@auca.kg
+(2 rows)
+
+
+postgres=# SELECT name, age, email FROM students ORDER BY age DESC;
+ name  | age |     email
+-------+-----+---------------
+ Bob   |  23 | bob@auca.kg
+ Alice |  21 | alice@auca.kg
+(2 rows)
+
+
+postgres=# SELECT name, email FROM students LIMIT 1;
+ name  |     email
+-------+---------------
+ Alice | alice@auca.kg
+(1 row)
