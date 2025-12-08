@@ -1,0 +1,2 @@
+"name","phone","medical_history","allergies","appointment_id","appointment_ts","doctor","study_type","conclusion","amount","invoice_status"
+"Айбек Токтосунов","+996555111222","Хронический бронхит","Пенициллин",1,"2025-12-09 09:00:00+05","Др. Кубаныч Жолдошев","УЗИ","Лёгкое воспаление","1200.00","unpaid"
